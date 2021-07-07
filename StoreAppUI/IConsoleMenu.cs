@@ -2,8 +2,10 @@ namespace StoreAppUI {
     // use enum for menu constants
     public enum MenuType {
         MainMenu,
+        CustomerMenu,
         AddCustomerMenu,
-        SearchCustomerMenu
+        SearchCustomerMenu,
+        Exit
     }
 
     // use a menu interface as base for all console menus
