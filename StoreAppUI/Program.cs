@@ -20,7 +20,9 @@ namespace StoreAppUI
             IConsoleMenu mainMenu = new MainMenu();
             // use boolean variable to control while loop for menus
             bool switchCase = true;
+            // use enum variable to declare current menu choice 
             MenuType currentMenu = MenuType.MainMenu;
+            // use factory menu to handle user choices
             IFactoryMenu factoryMenu = new FactoryMenu();
 
             // use while loop 
@@ -31,6 +33,12 @@ namespace StoreAppUI
                 currentMenu = mainMenu.UserChoice();
 
                 switch(currentMenu) {
+                    case MenuType.MainMenu:
+                        mainMenu = factoryMenu.GetMenu(MenuType.MainMenu);
+                        break;
+                    case MenuType.CustomerMenu:
+                        mainMenu = factoryMenu.GetMenu(MenuType.CustomerMenu);
+                        break;
                     case MenuType.Exit:
                         Console.WriteLine("Thank you for using the Store App!");
                         switchCase = false;

@@ -16,10 +16,10 @@ namespace StoreAppUI {
 
             // use switch case to handle different inputs
             switch(userInput) {
-                case "0":
-                    return MenuType.Exit;
                 case "1":
                     return MenuType.CustomerMenu;
+                case "0":
+                    return MenuType.Exit;
                 // default case for in case user inputs a nonvalid case
                 default:
                     Console.WriteLine("Input was not valid.");

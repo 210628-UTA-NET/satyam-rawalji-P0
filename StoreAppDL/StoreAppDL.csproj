@@ -2,7 +2,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StoreAppModels\StoreAppModels.csproj" />
-    <ProjectReference Include="..\StoreAppBL\StoreAppBL.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
