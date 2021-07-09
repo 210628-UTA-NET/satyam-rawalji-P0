@@ -15,7 +15,6 @@ namespace StoreAppUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             // create main menu object
             IConsoleMenu mainMenu = new MainMenu();
             // use boolean variable to control while loop for menus
@@ -38,6 +37,9 @@ namespace StoreAppUI
                         break;
                     case MenuType.CustomerMenu:
                         mainMenu = factoryMenu.GetMenu(MenuType.CustomerMenu);
+                        break;
+                    case MenuType.AddCustomerMenu:
+                        mainMenu = factoryMenu.GetMenu(MenuType.AddCustomerMenu);
                         break;
                     case MenuType.Exit:
                         Console.WriteLine("Thank you for using the Store App!");
