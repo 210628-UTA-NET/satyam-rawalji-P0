@@ -28,6 +28,8 @@ namespace StoreAppUI {
                     return new CustomerMenu();
                 case MenuType.AddCustomerMenu:
                     return new AddCustomerMenu(new CustomerBL(new Repository(new satyamdbContext(options))));
+                case MenuType.SearchCustomerMenu:
+                    return new SearchCustomerMenu(new CustomerBL(new Repository(new satyamdbContext(options))));
                 default:
                     return null;
             }

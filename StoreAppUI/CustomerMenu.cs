@@ -16,6 +16,8 @@ namespace StoreAppUI {
             switch(userInput) {
                 case "1":
                     return MenuType.AddCustomerMenu;
+                case "2":
+                    return MenuType.SearchCustomerMenu;
                 case "0":
                     return MenuType.MainMenu;
                 default:

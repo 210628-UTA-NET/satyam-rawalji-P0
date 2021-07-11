@@ -9,9 +9,9 @@ namespace StoreAppBL {
         public CustomerBL(IRepository p_repository) {
             _repository = p_repository;
         }
-        public List<Customer> RetrieveAllCustomers() {
+        public Customer SearchCustomer(string userEntry) {
             // placeholder
-            return new List<Customer>();
+            return _repository.SearchCustomer(userEntry);
         }
 
         public Customer AddCustomer(Customer _customer) {

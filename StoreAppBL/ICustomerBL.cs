@@ -5,7 +5,8 @@ using StoreAppModels;
 namespace StoreAppBL
 {
     public interface ICustomerBL {
-        List<Customer> RetrieveAllCustomers();
         Customer AddCustomer(Customer _customer);
+
+        Customer SearchCustomer(string userEntry);
     }
 }
