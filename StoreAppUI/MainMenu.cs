@@ -7,6 +7,8 @@ namespace StoreAppUI {
             Console.WriteLine("Welcome to the Store App Main Menu!");
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("[1] Go to the Customer options menu");
+            Console.WriteLine("[2] Place an order for a customer");
+            Console.WriteLine("[3] Go to the StoreFront options menu");
             Console.WriteLine("[0] Exit");
         }
 
@@ -18,6 +20,8 @@ namespace StoreAppUI {
             switch(userInput) {
                 case "1":
                     return MenuType.CustomerMenu;
+                case "2":
+                    return MenuType.PlaceOrderMenu;
                 case "0":
                     return MenuType.Exit;
                 // default case for in case user inputs a nonvalid case

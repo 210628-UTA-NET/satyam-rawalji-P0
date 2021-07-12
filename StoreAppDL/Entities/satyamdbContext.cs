@@ -18,12 +18,16 @@ namespace StoreAppDL.Entities
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<LineItem> LineItems { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<StoreFront> StoreFronts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=tcp:satyamdb.database.windows.net,1433;Initial Catalog=satyamdb;Persist Security Info=False;User ID=srawalji;Password=Salty3ham4;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
@@ -62,6 +66,99 @@ namespace StoreAppDL.Entities
                     .HasMaxLength(20)
                     .IsUnicode(false)
                     .HasColumnName("c_phoneNumber");
+            });
+
+            modelBuilder.Entity<LineItem>(entity =>
+            {
+                entity.HasKey(e => e.LId)
+                    .HasName("PK__LineItem__A7C7B6F86A7B2F07");
+
+                entity.ToTable("LineItem");
+
+                entity.Property(e => e.LId).HasColumnName("l_id");
+
+                entity.Property(e => e.LPId).HasColumnName("l_p_id");
+
+                entity.Property(e => e.LQuantity).HasColumnName("l_quantity");
+
+                entity.Property(e => e.LSId).HasColumnName("l_s_id");
+
+                entity.HasOne(d => d.LP)
+                    .WithMany(p => p.LineItems)
+                    .HasForeignKey(d => d.LPId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__LineItem__l_p_id__628FA481");
+
+                entity.HasOne(d => d.LS)
+                    .WithMany(p => p.LineItems)
+                    .HasForeignKey(d => d.LSId)
+                    .HasConstraintName("FK__LineItem__l_s_id__656C112C");
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.HasKey(e => e.OId)
+                    .HasName("PK__Orders__904BC20E9B0067C5");
+
+                entity.Property(e => e.OId).HasColumnName("o_id");
+
+                entity.Property(e => e.OCId).HasColumnName("o_c_id");
+
+                entity.Property(e => e.OSId).HasColumnName("o_s_id");
+
+                entity.Property(e => e.OTotal).HasColumnName("o_total");
+
+                entity.HasOne(d => d.OC)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.OCId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Orders__o_c_id__693CA210");
+
+                entity.HasOne(d => d.OS)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.OSId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Orders__o_s_id__68487DD7");
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.HasKey(e => e.PId)
+                    .HasName("PK__Product__82E06B9100FB12AE");
+
+                entity.ToTable("Product");
+
+                entity.Property(e => e.PId).HasColumnName("p_id");
+
+                entity.Property(e => e.PName)
+                    .IsRequired()
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("p_name");
+
+                entity.Property(e => e.PPrice).HasColumnName("p_price");
+            });
+
+            modelBuilder.Entity<StoreFront>(entity =>
+            {
+                entity.HasKey(e => e.SId)
+                    .HasName("PK__StoreFro__2F3684F49197F71C");
+
+                entity.ToTable("StoreFront");
+
+                entity.Property(e => e.SId).HasColumnName("s_id");
+
+                entity.Property(e => e.SAddress)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("s_address");
+
+                entity.Property(e => e.SName)
+                    .IsRequired()
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("s_name");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -44,6 +44,9 @@ namespace StoreAppUI
                     case MenuType.SearchCustomerMenu:
                         mainMenu = factoryMenu.GetMenu(MenuType.SearchCustomerMenu);
                         break;
+                    case MenuType.PlaceOrderMenu:
+                        mainMenu = factoryMenu.GetMenu(MenuType.PlaceOrderMenu);
+                        break;
                     case MenuType.Exit:
                         Console.WriteLine("Thank you for using the Store App!");
                         switchCase = false;

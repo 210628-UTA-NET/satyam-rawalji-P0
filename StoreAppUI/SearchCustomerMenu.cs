@@ -12,8 +12,7 @@ namespace StoreAppUI {
         public void ConsoleMenu() {
             Console.WriteLine("Welcome to the Search Customer Menu!");
             Console.WriteLine("What would you like to find a customer by?");
-            Console.WriteLine("[1] Search by Name");
-            // Console.WriteLine("[2] Search by Email");
+            Console.WriteLine("[1] Search by Name and Email");
             Console.WriteLine("[0] Go back to Customer Menu");
         }
 
@@ -22,15 +21,20 @@ namespace StoreAppUI {
 
             switch(userInput) {
                 case "1":
+                    Console.WriteLine();
                     Console.WriteLine("Please enter the customer name: ");
-                    string queryInput = Console.ReadLine();
+                    string queryInput1 = Console.ReadLine();
+                    Console.WriteLine("Please enter the customer email: ");
+                    string queryInput2 = Console.ReadLine();
+                    Console.WriteLine();
                     try {
-                        Customer queryResult = _customerBL.SearchCustomer(queryInput);
+                        Customer queryResult = _customerBL.SearchCustomer(queryInput1, queryInput2);
                         Console.WriteLine("Found Customer!");
                         Console.WriteLine("Name: " + queryResult.Name);
                         Console.WriteLine("Address: " + queryResult.Address);
                         Console.WriteLine("Email: " + queryResult.Email);
                         Console.WriteLine("Phone Number: " + queryResult.PhoneNumber);
+
                         Console.WriteLine("Press Enter to go back to Search Customer Menu");
                         Console.ReadLine();
                         return MenuType.SearchCustomerMenu;
