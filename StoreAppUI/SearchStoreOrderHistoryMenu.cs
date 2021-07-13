@@ -4,17 +4,15 @@ using StoreAppBL;
 using StoreAppModels;
 
 namespace StoreAppUI {
-    public class SearchStoreMenu : IConsoleMenu {
-        //private static StoreFront _storeFront = new StoreFront();
+    public class SearchStoreOrderHistoryMenu : IConsoleMenu {
         private IStoreFrontBL _storeFrontBL;
-        public SearchStoreMenu(IStoreFrontBL p_storeFrontBL) {
+        public SearchStoreOrderHistoryMenu(IStoreFrontBL p_storeFrontBL) {
             _storeFrontBL = p_storeFrontBL;
         }
-
         public void ConsoleMenu() {
-            Console.WriteLine("Welcome to the Search Store Front Menu!");
+            Console.WriteLine("Welcome to the Search Store Order Menu!");
             Console.WriteLine("What would you like to do?");
-            Console.WriteLine("[1] View Store Inventory by store name");
+            Console.WriteLine("[1] Search for orders by store name");
             Console.WriteLine("[0] Go back to Store Front Menu");
         }
 
@@ -30,18 +28,17 @@ namespace StoreAppUI {
                     
                     // try catch not working in this scenario
                     try {
-                        List<LineItem> queryResult = _storeFrontBL.SearchStore(queryInput);
+                        List<Order> queryResult = _storeFrontBL.SearchStoreOrders(queryInput);
                         Console.WriteLine("Found Store!");
                         Console.WriteLine("Inventory: \n");
                         foreach(var query in queryResult) {
-                            Console.WriteLine("Product: {0}\n Price: {1}\n Quantity: {2}\n", 
-                                                query.Name,
-                                                query.Price,
-                                                query.Quantity);
+                            Console.WriteLine("Date: {0}  |  Total purchase price: ${1}", 
+                                                query.Date,
+                                                query.Total);
                         }
-                        Console.WriteLine("Press Enter to go back to Search Customer Menu");
+                        Console.WriteLine("Press Enter to go back to Store Front Menu");
                         Console.ReadLine();
-                        return MenuType.SearchStoreMenu;
+                        return MenuType.StoreFrontMenu;
                     }   
                     catch(InvalidOperationException) {
                         Console.WriteLine("Input was not found. Press press enter to try again.");
@@ -54,7 +51,7 @@ namespace StoreAppUI {
                     Console.WriteLine("Input was not valid.");
                     Console.WriteLine("Please press Enter to continue");
                     Console.ReadLine();
-                    return MenuType.SearchStoreMenu;
+                    return MenuType.SearchStoreOrderHistoryMenu;
             }
         }
     }

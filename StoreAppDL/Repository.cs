@@ -61,5 +61,18 @@ namespace StoreAppDL {
             }
             return _replenishStore;
         }
+
+        public List<StoreAppModels.Order> SearchStoreOrders(string _storeName) {
+            return (from sf in _context.StoreFronts
+                    join o in _context.Orders on sf.SId equals o.OSId
+                    where sf.SName == _storeName
+                    select new StoreAppModels.Order() {
+                        CId = o.OCId,
+                        SId = sf.SId,
+                        Total = (double)o.OTotal,
+                        Date = (DateTime)o.OOrderDate
+                    }).OrderByDescending(date => date.Date)
+                    .ToList();
+        }
     }
 }
