@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using StoreAppModels;
 using StoreAppDL;
 
@@ -16,5 +17,8 @@ namespace StoreAppBL {
             return _repository.SearchCustomer(userEntry1, userEntry2);
         }
 
+        public List<Order> SearchCustomerOrders(string _customerName, string _customerEmail) {
+            return _repository.SearchCustomerOrders(_customerName, _customerEmail);
+        }
     }
 }

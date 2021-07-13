@@ -7,6 +7,7 @@ namespace StoreAppUI {
             Console.WriteLine("What would you like to do?");
             Console.WriteLine("[1] Add a new customer");
             Console.WriteLine("[2] Search for a customer");
+            Console.WriteLine("[3] Search for a customer's order history");
             Console.WriteLine("[0] Go back to Main Menu");
         }
 
@@ -18,6 +19,8 @@ namespace StoreAppUI {
                     return MenuType.AddCustomerMenu;
                 case "2":
                     return MenuType.SearchCustomerMenu;
+                case "3":
+                    return MenuType.SearchCustomerOrderHistoryMenu;
                 case "0":
                     return MenuType.MainMenu;
                 default:

@@ -10,6 +10,7 @@ namespace StoreAppUI {
         SearchStoreMenu,
         ReplenishStoreMenu,
         SearchStoreOrderHistoryMenu,
+        SearchCustomerOrderHistoryMenu,
         Exit
     }
 

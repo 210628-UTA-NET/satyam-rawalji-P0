@@ -74,5 +74,20 @@ namespace StoreAppDL {
                     }).OrderByDescending(date => date.Date)
                     .ToList();
         }
+
+        public List<StoreAppModels.Order> SearchCustomerOrders(string _customerName, string _customerEmail) {
+            return (from c in _context.Customers
+                    join o in _context.Orders on c.CId equals o.OCId
+                    join s in _context.StoreFronts on o.OSId equals s.SId
+                    where c.CName == _customerName && c.CEmail == _customerEmail
+                    select new StoreAppModels.Order() {
+                        CId = o.OCId,
+                        SId = o.OSId,
+                        SName = s.SName,
+                        Total = (double)o.OTotal,
+                        Date = (DateTime)o.OOrderDate
+                    }).OrderByDescending(date => date.Date)
+                    .ToList();
+        }
     }
 }

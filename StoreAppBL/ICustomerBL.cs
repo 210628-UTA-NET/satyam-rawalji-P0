@@ -8,5 +8,7 @@ namespace StoreAppBL
         Customer AddCustomer(Customer _customer);
 
         Customer SearchCustomer(string userEntry1, string userEntry2);
+
+        List<Order> SearchCustomerOrders(string _customerName, string _customerEmail);
     }
 }

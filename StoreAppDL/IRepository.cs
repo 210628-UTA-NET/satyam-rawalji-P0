@@ -16,5 +16,7 @@ namespace StoreAppDL
         List<LineItem> ReplenishStore(List<LineItem> _replenishStore);
 
         List<Order> SearchStoreOrders(string _storeName);
+
+        List<Order> SearchCustomerOrders(string _customerName, string _customerEmail);
     }    
 }
