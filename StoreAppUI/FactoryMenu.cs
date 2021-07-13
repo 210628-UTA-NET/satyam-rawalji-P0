@@ -32,6 +32,10 @@ namespace StoreAppUI {
                     return new SearchCustomerMenu(new CustomerBL(new Repository(new satyamdbContext(options))));
                 case MenuType.PlaceOrderMenu:
                     return new PlaceOrderMenu(new OrderBL(new Repository(new satyamdbContext(options))));
+                case MenuType.StoreFrontMenu:
+                    return new StoreFrontMenu();
+                case MenuType.SearchStoreMenu:
+                    return new SearchStoreMenu(new StoreFrontBL(new Repository(new satyamdbContext(options))));
                 default:
                     return null;
             }

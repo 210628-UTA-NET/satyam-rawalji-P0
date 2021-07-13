@@ -6,6 +6,10 @@ namespace StoreAppUI {
         AddCustomerMenu,
         SearchCustomerMenu,
         PlaceOrderMenu,
+        StoreFrontMenu,
+        SearchStoreMenu,
+        ReplenishStoreMenu,
+        SearchStoreOrderHistoryMenu,
         Exit
     }
 

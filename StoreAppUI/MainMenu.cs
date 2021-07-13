@@ -22,6 +22,8 @@ namespace StoreAppUI {
                     return MenuType.CustomerMenu;
                 case "2":
                     return MenuType.PlaceOrderMenu;
+                case "3":
+                    return MenuType.StoreFrontMenu;
                 case "0":
                     return MenuType.Exit;
                 // default case for in case user inputs a nonvalid case

@@ -38,5 +38,50 @@ namespace StoreAppDL {
             // place holder
             return new StoreAppModels.Order();
         }
+
+        public List<StoreAppModels.LineItem> SearchStore(string _storeName) {
+            // placeholder 
+            /*return _context.LineItems
+                .Join(
+                    _context.Products,
+                    lineitem => lineitem.LPId,
+                    products => products.PId,
+                    (lineitem, products) => new {
+                        LineItemId = lineitem.LId,
+                        ProductName = products.PName,
+                        ProductPrice = products.PPrice,
+                        LineItemQuantity = lineitem.LQuantity,
+                        LineItemStoreId = lineitem.LSId
+                    }
+                ).Join(
+                    _context.StoreFronts,
+                    lineitem => lineitem.LineItemStoreId,
+                    storefront => storefront.SId,
+                    (lineitem, storefront) => new {
+                        LineItemId = lineitem.LineItemId,
+                        LineItemQuantity = lineitem.LineItemQuantity,
+                        LineItemStoreId = lineitem.LineItemStoreId,
+                        StoreFrontName = storefront.SName
+                    }
+                ).Select(
+                    inventory => new StoreAppModels.LineItem() {
+                        LId = inventory.LineItemId,
+                        LSId = (int)inventory.LineItemStoreId,
+                        Quantity = inventory.LineItemQuantity,
+                        Price = 
+                    }
+                )*/
+            return /*((List<StoreAppModels.LineItem>)*/(from li in _context.LineItems
+                    join p in _context.Products on li.LPId equals p.PId
+                    join sf in _context.StoreFronts on li.LSId equals sf.SId
+                    where sf.SName == _storeName
+                    select new StoreAppModels.LineItem() {
+                        LId = li.LId,
+                        LSId = (int)li.LSId,
+                        Name = p.PName,
+                        Price = p.PPrice,
+                        Quantity = li.LQuantity
+                    }).ToList();
+        }
     }
 }
