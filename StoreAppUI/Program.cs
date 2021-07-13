@@ -53,6 +53,9 @@ namespace StoreAppUI
                     case MenuType.SearchStoreMenu:
                         mainMenu = factoryMenu.GetMenu(MenuType.SearchStoreMenu);
                         break;
+                    case MenuType.ReplenishStoreMenu:
+                        mainMenu = factoryMenu.GetMenu(MenuType.ReplenishStoreMenu);
+                        break;
                     case MenuType.Exit:
                         Console.WriteLine("Thank you for using the Store App!");
                         switchCase = false;

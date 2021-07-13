@@ -12,5 +12,7 @@ namespace StoreAppDL
         Order PlaceOrder(Order _order);
 
         List<LineItem> SearchStore(string _storeName);
+
+        List<LineItem> ReplenishStore(List<LineItem> _replenishStore);
     }    
 }

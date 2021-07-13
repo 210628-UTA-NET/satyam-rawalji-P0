@@ -12,5 +12,9 @@ namespace StoreAppBL {
         public List<LineItem> SearchStore(string _storeName) {
             return _repository.SearchStore(_storeName);
         }
+
+        public List<LineItem> ReplenishStore(List<LineItem> _replenishStore) {
+            return _repository.ReplenishStore(_replenishStore);
+        }
     }
 }

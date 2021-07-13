@@ -6,5 +6,7 @@ namespace StoreAppBL
 {
     public interface IStoreFrontBL {
         List<LineItem> SearchStore(string _storeName);
+
+        List<LineItem> ReplenishStore(List<LineItem> _replenishStore);
     }
 }
