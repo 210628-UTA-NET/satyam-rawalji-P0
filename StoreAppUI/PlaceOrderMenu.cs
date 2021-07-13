@@ -6,7 +6,6 @@ using StoreAppModels;
 
 namespace StoreAppUI {
     public class PlaceOrderMenu : IConsoleMenu {
-        //private static Order _order = new Order();
         private IOrderBL _orderBL;
         private IStoreFrontBL _storeFrontBL;
         public PlaceOrderMenu(IOrderBL p_orderBL, IStoreFrontBL p_storeFrontBL) {
@@ -34,8 +33,7 @@ namespace StoreAppUI {
                     Console.WriteLine("Please enter the store name: ");
                     string queryInput3 = Console.ReadLine();
                     Console.WriteLine();
-                    
-                    // try catch not working in this scenario
+
                     try {
                         List<LineItem> queryResult = _storeFrontBL.SearchStore(queryInput3);
                         foreach(var quantity in queryResult) {
