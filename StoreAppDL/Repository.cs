@@ -34,8 +34,18 @@ namespace StoreAppDL {
             return queryCustomer;
         }
 
-        public StoreAppModels.Order PlaceOrder(StoreAppModels.Order p_order) {
-            // place holder
+        public StoreAppModels.Order PlaceOrder(string _customerName, string _customerEmail, int _storeID, double _total) {
+            var customer = (from c in _context.Customers
+                            where c.CName == _customerName && c.CEmail == _customerEmail
+                            select new StoreAppModels.Customer() {
+                                CId = c.CId
+                            }).Single();
+            _context.Orders.Add(new StoreAppDL.Entities.Order{
+                OCId = customer.CId,
+                OSId = _storeID,
+                OTotal = _total
+            });
+            _context.SaveChanges();
             return new StoreAppModels.Order();
         }
 

@@ -3,6 +3,6 @@ using StoreAppModels;
 
 namespace StoreAppBL {
     public interface IOrderBL {
-        Order PlaceOrder(Order _order);
+        Order PlaceOrder(string _customerName, string _customerEmail, int _storeID, double _total);
     }
 }

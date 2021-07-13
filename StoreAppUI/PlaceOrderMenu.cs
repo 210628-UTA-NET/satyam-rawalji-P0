@@ -1,13 +1,17 @@
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using StoreAppBL;
 using StoreAppModels;
 
 namespace StoreAppUI {
     public class PlaceOrderMenu : IConsoleMenu {
-        private static Order _order = new Order();
+        //private static Order _order = new Order();
         private IOrderBL _orderBL;
-        public PlaceOrderMenu(IOrderBL p_orderBL) {
+        private IStoreFrontBL _storeFrontBL;
+        public PlaceOrderMenu(IOrderBL p_orderBL, IStoreFrontBL p_storeFrontBL) {
             _orderBL = p_orderBL;
+            _storeFrontBL = p_storeFrontBL;
         }
 
         public void ConsoleMenu() {
@@ -15,50 +19,95 @@ namespace StoreAppUI {
             Console.WriteLine("Please choose an option to get started.");
             Console.WriteLine("[1] Get an order started");
             Console.WriteLine("[0] Go back to Main Menu");
-            /*Console.WriteLine("Choose a number to add items to cart");
-            Console.WriteLine("[1] Bottle of Thousand Island Dressing - $2.32 - " + _order.Item1);
-            Console.WriteLine("[2] Loaf of Rye Bread - $2.69 - " + _order.Item2);
-            Console.WriteLine("[3] Jar of Sauerkraut - $2.11 - " + _order.Item3);
-            Console.WriteLine("[4] Swiss Cheese slices - $3.39 - " + _order.Item4);
-            Console.WriteLine("[5] Pastrami slices - $4.99 - " + _order.Item5);
-            Console.WriteLine("[6] Finalize Order");
-            Console.WriteLine("[0] Go back to Main Menu");*/
         }
-
-        // switch statement for making an order
-        /*
-            case "1":
-                    Console.WriteLine("Please enter desired quantity: ");
-                    _order.Item1 = Convert.ToInt32(Console.ReadLine());
-                    return MenuType.PlaceOrderMenu;
-                case "2":
-                    Console.WriteLine("Please enter desired quantity: ");
-                    _order.Item2 = Convert.ToInt32(Console.ReadLine());
-                    return MenuType.PlaceOrderMenu;
-                case "3":
-                    Console.WriteLine("Please enter desired quantity: ");
-                    _order.Item3 = Convert.ToInt32(Console.ReadLine());
-                    return MenuType.PlaceOrderMenu;
-                case "4":
-                    Console.WriteLine("Please enter desired quantity: ");
-                    _order.Item4 = Convert.ToInt32(Console.ReadLine());
-                    return MenuType.PlaceOrderMenu;
-                case "5":
-                    Console.WriteLine("Please enter desired quantity: ");
-                    _order.Item5 = Convert.ToInt32(Console.ReadLine());
-                    return MenuType.PlaceOrderMenu;
-                case "6":
-                    _orderBL.PlaceOrder(_order);
-                    return MenuType.MainMenu;
-        */
 
         public MenuType UserChoice() {
             string userInput = Console.ReadLine();
  
             switch(userInput) {
                 case "1":
-                // placeholder 
-                    return MenuType.SearchCustomerMenu;
+                    Console.WriteLine();
+                    Console.WriteLine("Please enter customer name: ");
+                    string queryInput1 = Console.ReadLine();
+                    Console.WriteLine("Please enter customer email: ");
+                    string queryInput2 = Console.ReadLine();
+                    Console.WriteLine("Please enter the store name: ");
+                    string queryInput3 = Console.ReadLine();
+                    Console.WriteLine();
+                    
+                    // try catch not working in this scenario
+                    try {
+                        List<LineItem> queryResult = _storeFrontBL.SearchStore(queryInput3);
+                        foreach(var quantity in queryResult) {
+                            quantity.Quantity = 0;
+                        }
+                        bool whileCounter = true;
+                        double total = 0.00;
+                        while(whileCounter) {
+                            Console.Clear();
+                            int counter = 1;
+                            foreach(var query in queryResult) {
+                                Console.WriteLine("[" + counter++ + "] : {0}  |  Price: {1}  |  Quantity: {2}", 
+                                                    query.Name,
+                                                    query.Price,
+                                                    query.Quantity);
+                            }
+                            Console.WriteLine("Choose a product to add, choose 9 to place order, or choose 0 to exit.");
+                            string replenishInput = Console.ReadLine();
+                            switch(replenishInput) {
+                                case "1":
+                                    Console.WriteLine("How many units do you want to add?");
+                                    queryResult[0].Quantity += Convert.ToInt32(Console.ReadLine());
+                                    continue;
+                                case "2":
+                                    Console.WriteLine("How many units do you want to add?");
+                                    queryResult[1].Quantity += Convert.ToInt32(Console.ReadLine());
+                                    continue;
+                                case "3":
+                                    Console.WriteLine("How many units do you want to add?");
+                                    queryResult[2].Quantity += Convert.ToInt32(Console.ReadLine());
+                                    continue;
+                                case "4":
+                                    Console.WriteLine("How many units do you want to add?");
+                                    queryResult[3].Quantity += Convert.ToInt32(Console.ReadLine());
+                                    continue;
+                                case "5":
+                                    Console.WriteLine("How many units do you want to add?");
+                                    queryResult[4].Quantity += Convert.ToInt32(Console.ReadLine());
+                                    continue;
+                                case "9":
+                                // inputting individual, not together
+                                    int storeID = 0;
+                                    foreach(var enter in queryResult) {
+                                        total += enter.Price * enter.Quantity;
+                                        storeID = enter.LSId;
+                                    }
+                                    _orderBL.PlaceOrder(queryInput1,
+                                                            queryInput2,
+                                                            storeID,
+                                                            total);
+                                    whileCounter = false;
+                                    break;
+                                case "0":
+                                    whileCounter = false;
+                                    break;
+                                default:
+                                    Console.WriteLine("Invalid input. Please try again.");
+                                    Thread.Sleep(1000);
+                                    continue;
+                            }
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine("Press Enter to go back to Place Order Menu");
+                        Console.ReadLine();
+                        return MenuType.PlaceOrderMenu;
+                    }   
+                    catch(InvalidOperationException) {
+                        Console.WriteLine("Input was invalid. Please press enter to try again.");
+                        Console.ReadLine();
+                        return MenuType.PlaceOrderMenu;
+                    }
                 case "0":
                     return MenuType.MainMenu;
                 default:

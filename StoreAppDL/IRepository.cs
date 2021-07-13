@@ -9,7 +9,7 @@ namespace StoreAppDL
 
         Customer SearchCustomer(string userEntry1, string userEntry2);
 
-        Order PlaceOrder(Order _order);
+        Order PlaceOrder(string _customerName, string _customerEmail, int _storeID, double _total);
 
         List<LineItem> SearchStore(string _storeName);
 

@@ -8,8 +8,8 @@ namespace StoreAppBL {
         public OrderBL(IRepository p_repository) {
             _repository = p_repository;
         }
-        public Order PlaceOrder(Order _order) {
-            return _repository.PlaceOrder(_order);
+        public Order PlaceOrder(string _customerName, string _customerEmail, int _storeID, double _total) {
+            return _repository.PlaceOrder(_customerName, _customerEmail, _storeID, _total);
         }
     }
 }
