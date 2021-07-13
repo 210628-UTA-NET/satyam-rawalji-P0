@@ -5,12 +5,16 @@ using StoreAppDL.Entities;
 using System.Linq;
 
 namespace StoreAppDL {
+    // Repository implements repository interface
     public class Repository : IRepository {
+        // create dbcontext variable to run queries
         private satyamdbContext _context;
+        // use Repository constructor to use variable passed from FactoryMenu.cs
         public Repository(satyamdbContext p_context) {
             // dependency injection
             _context = p_context;
         }
+        // adds customer to db
         public StoreAppModels.Customer AddCustomer(StoreAppModels.Customer p_customer) {
             _context.Customers.Add(new StoreAppDL.Entities.Customer{
                 CId = p_customer.CId,
@@ -22,7 +26,7 @@ namespace StoreAppDL {
             _context.SaveChanges();
             return p_customer;
         }
-
+        // searches for customer based on name and email
         public StoreAppModels.Customer SearchCustomer(string userEntry1, string userEntry2) {
             StoreAppModels.Customer queryCustomer = new StoreAppModels.Customer();
             var customer = _context.Customers.Single(person => person.CName == userEntry1 && person.CEmail == userEntry2);
@@ -33,7 +37,7 @@ namespace StoreAppDL {
 
             return queryCustomer;
         }
-
+        // places order based on customer and store id
         public StoreAppModels.Order PlaceOrder(string _customerName, string _customerEmail, int _storeID, double _total) {
             var customer = (from c in _context.Customers
                             where c.CName == _customerName && c.CEmail == _customerEmail
@@ -48,7 +52,7 @@ namespace StoreAppDL {
             _context.SaveChanges();
             return new StoreAppModels.Order();
         }
-
+        // searches for store and returns inventory
         public List<StoreAppModels.LineItem> SearchStore(string _storeName) {
             return (from li in _context.LineItems
                     join p in _context.Products on li.LPId equals p.PId
@@ -62,7 +66,7 @@ namespace StoreAppDL {
                         Quantity = li.LQuantity
                     }).ToList();
         }
-
+        // replenishes store inventory if user chooses so
         public List<StoreAppModels.LineItem> ReplenishStore(List<StoreAppModels.LineItem> _replenishStore) {
             foreach(var product in _replenishStore) {
                 var item = _context.LineItems.Single(li => li.LId == product.LId);
@@ -71,7 +75,7 @@ namespace StoreAppDL {
             }
             return _replenishStore;
         }
-
+        // searches db for orders linked to user-chosen store
         public List<StoreAppModels.Order> SearchStoreOrders(string _storeName) {
             return (from sf in _context.StoreFronts
                     join o in _context.Orders on sf.SId equals o.OSId
@@ -84,7 +88,7 @@ namespace StoreAppDL {
                     }).OrderByDescending(date => date.Date)
                     .ToList();
         }
-
+        // searches db for orders linked to user-chosen customer
         public List<StoreAppModels.Order> SearchCustomerOrders(string _customerName, string _customerEmail) {
             return (from c in _context.Customers
                     join o in _context.Orders on c.CId equals o.OCId
