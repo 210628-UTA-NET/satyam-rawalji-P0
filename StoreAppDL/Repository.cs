@@ -83,7 +83,7 @@ namespace StoreAppDL {
                     select new StoreAppModels.Order() {
                         CId = o.OCId,
                         SId = sf.SId,
-                        Total = (double)o.OTotal,
+                        Total = Math.Round((double)o.OTotal,2),
                         Date = (DateTime)o.OOrderDate
                     }).OrderByDescending(date => date.Date)
                     .ToList();
@@ -98,7 +98,7 @@ namespace StoreAppDL {
                         CId = o.OCId,
                         SId = o.OSId,
                         SName = s.SName,
-                        Total = (double)o.OTotal,
+                        Total = Math.Round((double)o.OTotal,2),
                         Date = (DateTime)o.OOrderDate
                     }).OrderByDescending(date => date.Date)
                     .ToList();
