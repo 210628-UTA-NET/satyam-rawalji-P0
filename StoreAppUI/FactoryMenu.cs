@@ -10,6 +10,7 @@ namespace StoreAppUI {
     public class FactoryMenu : IFactoryMenu {
         public IConsoleMenu GetMenu(MenuType _menu) {
 
+            // json file used to hold connection string
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("app_setting.json")
@@ -17,10 +18,12 @@ namespace StoreAppUI {
 
             string connectionString = configuration.GetConnectionString("DBConnString");
 
+            // use dbcontext class to deal with db queries
             DbContextOptions<satyamdbContext> options = new DbContextOptionsBuilder<satyamdbContext>()
                 .UseSqlServer(connectionString)
                 .Options;
 
+            // user choice will create new menu object that user can interact with
             switch(_menu) {
                 case MenuType.MainMenu:
                     return new MainMenu();

@@ -6,6 +6,7 @@ using StoreAppModels;
 
 namespace StoreAppUI {
     public class PlaceOrderMenu : IConsoleMenu {
+        // orderbl object and storefront bl object created for later repo use
         private IOrderBL _orderBL;
         private IStoreFrontBL _storeFrontBL;
         public PlaceOrderMenu(IOrderBL p_orderBL, IStoreFrontBL p_storeFrontBL) {
@@ -25,6 +26,7 @@ namespace StoreAppUI {
  
             switch(userInput) {
                 case "1":
+                    // for order, user needs customer name, customer email, and store name
                     Console.WriteLine();
                     Console.WriteLine("Please enter customer name: ");
                     string queryInput1 = Console.ReadLine();
@@ -33,23 +35,26 @@ namespace StoreAppUI {
                     Console.WriteLine("Please enter the store name: ");
                     string queryInput3 = Console.ReadLine();
                     Console.WriteLine();
-
+                    // use a list to later input lineitem data into db
                     try {
                         List<LineItem> queryResult = _storeFrontBL.SearchStore(queryInput3);
                         foreach(var quantity in queryResult) {
                             quantity.Quantity = 0;
                         }
+                        // use boolean to have a semi-infinite while loop
                         bool whileCounter = true;
                         double total = 0.00;
                         while(whileCounter) {
                             Console.Clear();
                             int counter = 1;
+                            // foreach displays lineitem data
                             foreach(var query in queryResult) {
                                 Console.WriteLine("[" + counter++ + "] : {0}  |  Price: {1}  |  Quantity: {2}", 
                                                     query.Name,
                                                     query.Price,
                                                     query.Quantity);
                             }
+                            // user can keep adding quantity until order is finalized
                             Console.WriteLine("Choose a product to add, choose 9 to place order, or choose 0 to exit.");
                             string replenishInput = Console.ReadLine();
                             switch(replenishInput) {
@@ -74,7 +79,8 @@ namespace StoreAppUI {
                                     queryResult[4].Quantity += Convert.ToInt32(Console.ReadLine());
                                     continue;
                                 case "9":
-                                // inputting individual, not together
+                                // when customer is done, total price of order is added up
+                                // information is sent to repository through orderbl object
                                     int storeID = 0;
                                     foreach(var enter in queryResult) {
                                         total += enter.Price * enter.Quantity;
@@ -95,13 +101,13 @@ namespace StoreAppUI {
                                     continue;
                             }
                         }
-
                         Console.WriteLine();
                         Console.WriteLine("Press Enter to go back to Place Order Menu");
                         Console.ReadLine();
                         return MenuType.PlaceOrderMenu;
                     }   
-                    catch(InvalidOperationException) {
+                    // catch block runs in case of an incorrect input
+                    catch/*(InvalidOperationException)*/ {
                         Console.WriteLine("Input was invalid. Please press enter to try again.");
                         Console.ReadLine();
                         return MenuType.PlaceOrderMenu;

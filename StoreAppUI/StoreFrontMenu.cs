@@ -5,6 +5,7 @@ using StoreAppModels;
 namespace StoreAppUI {
     public class StoreFrontMenu : IConsoleMenu {
         public void ConsoleMenu() {
+            // menu to deal with anything related to stores
             Console.WriteLine("Welcome to the Store Front Menu!");
             Console.WriteLine("Please choose an option to get started.");
             Console.WriteLine("[1] View Store Inventory");
@@ -13,6 +14,7 @@ namespace StoreAppUI {
             Console.WriteLine("[0] Go back to Main Menu");
         }
         public MenuType UserChoice() {
+            // use user input to choose which menus to access
             string userInput = Console.ReadLine();
 
             switch(userInput) {

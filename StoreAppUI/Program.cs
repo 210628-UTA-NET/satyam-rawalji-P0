@@ -28,9 +28,12 @@ namespace StoreAppUI
             while(switchCase) {
                 // always clear Console before choosing a new choice
                 Console.Clear();
+                // brings up main menu through interface function
                 mainMenu.ConsoleMenu();
+                // asks user for menu choice
                 currentMenu = mainMenu.UserChoice();
 
+                // user choice will send program to factory menu file where new menu object is created
                 switch(currentMenu) {
                     case MenuType.MainMenu:
                         mainMenu = factoryMenu.GetMenu(MenuType.MainMenu);

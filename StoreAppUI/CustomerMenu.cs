@@ -2,6 +2,7 @@ using System;
 
 namespace StoreAppUI {
     public class CustomerMenu : IConsoleMenu {
+        // menu user will interact with for all customer related inquiries
         public void ConsoleMenu() {
             Console.WriteLine("Welcome to the Store App Customer Menu!");
             Console.WriteLine("What would you like to do?");
@@ -12,6 +13,7 @@ namespace StoreAppUI {
         }
 
         public MenuType UserChoice() {
+            // get user input
             string userInput = Console.ReadLine();
 
             switch(userInput) {

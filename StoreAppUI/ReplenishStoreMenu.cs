@@ -6,7 +6,6 @@ using StoreAppModels;
 
 namespace StoreAppUI {
     public class ReplenishStoreMenu : IConsoleMenu {
-        private static StoreFront _storeFront = new StoreFront();
         private IStoreFrontBL _storeFrontBL;
         public ReplenishStoreMenu(IStoreFrontBL p_storeFrontBL) {
             _storeFrontBL = p_storeFrontBL;
@@ -23,19 +22,20 @@ namespace StoreAppUI {
 
             switch(userInput) {
                 case "1":
+                    // user needs store name to replenish store inventory
                     Console.WriteLine();
                     Console.WriteLine("Please enter the store name: ");
                     string queryInput = Console.ReadLine();
                     Console.WriteLine();
-                    
-                    // try catch not working in this scenario
                     try {
+                        // inventory will be placed into lineitem list
                         List<LineItem> queryResult = _storeFrontBL.SearchStore(queryInput);
-                        //int item1, item2, item3, item4, item5;
+                        // use boolean to create semi-infinite while loop
                         bool whileCounter = true;
                         while(whileCounter) {
                             Console.Clear();
                             int counter = 1;
+                            // use foreach to display data
                             foreach(var query in queryResult) {
                                 Console.WriteLine("[" + counter++ + "] : {0}  |  Quantity: {1}", 
                                                     query.Name,
@@ -77,13 +77,12 @@ namespace StoreAppUI {
                                     continue;
                             }
                         }
-
                         Console.WriteLine();
                         Console.WriteLine("Press Enter to go back to Search Customer Menu");
                         Console.ReadLine();
                         return MenuType.ReplenishStoreMenu;
                     }   
-                    catch(InvalidOperationException) {
+                    catch/*(InvalidOperationException)*/ {
                         Console.WriteLine("Store was not found. Press press enter to try again.");
                         Console.ReadLine();
                         return MenuType.ReplenishStoreMenu;

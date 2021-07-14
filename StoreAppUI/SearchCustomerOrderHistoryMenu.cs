@@ -5,6 +5,7 @@ using StoreAppModels;
 
 namespace StoreAppUI {
     public class SearchCustomerOrderHistoryMenu : IConsoleMenu {
+        // use customerbl object to later send info to the repository for querying
         private ICustomerBL _customerBL;
         public SearchCustomerOrderHistoryMenu(ICustomerBL p_customerBL) {
             _customerBL = p_customerBL;
@@ -21,6 +22,7 @@ namespace StoreAppUI {
 
             switch(userInput) {
                 case "1":
+                    // user needs to input name and email to get customer order history
                     Console.WriteLine();
                     Console.WriteLine("Please enter the customer name: ");
                     string queryInput1 = Console.ReadLine();
@@ -28,11 +30,13 @@ namespace StoreAppUI {
                     string queryInput2 = Console.ReadLine();
                     Console.WriteLine();
                     
-                    // try catch not working in this scenario
+                    // try catch block used to handle some exceptions
                     try {
+                        // if try block runs, orders are queried and placed in list<order>
                         List<Order> queryResult = _customerBL.SearchCustomerOrders(queryInput1, queryInput2);
                         Console.WriteLine("Found Customer!");
                         Console.WriteLine("Inventory: \n");
+                        // use a foreach loop to display pertinent order informaiton
                         foreach(var query in queryResult) {
                             Console.WriteLine("Store: {0}  |  Date: {1}  |  Total purchase price: ${2}", 
                                                 query.SName,
@@ -43,7 +47,8 @@ namespace StoreAppUI {
                         Console.ReadLine();
                         return MenuType.CustomerMenu;
                     }   
-                    catch(InvalidOperationException) {
+                    // if query doesnt work, redirect customer back to order history menu
+                    catch/*(InvalidOperationException)*/ {
                         Console.WriteLine("Input was not found. Press press enter to try again.");
                         Console.ReadLine();
                         return MenuType.SearchCustomerOrderHistoryMenu;

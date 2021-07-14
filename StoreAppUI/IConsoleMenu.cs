@@ -15,6 +15,7 @@ namespace StoreAppUI {
     }
 
     // use a menu interface as base for all console menus
+    // all menu objects will use this interface as a template
     public interface IConsoleMenu {
         /// <summary>
         /// ConsoleMenu will act as template for all menus use in app

@@ -7,13 +7,14 @@ namespace StoreAppUI {
     public class AddCustomerMenu : IConsoleMenu {
         // create customer object to add
         private static Customer _customer = new Customer();
+        // create customerbl object to later use in the Repository file
         private ICustomerBL _customerBL;
         public AddCustomerMenu(ICustomerBL p_customerBL) {
             _customerBL = p_customerBL;
         }
 
-        // create customerBL object
         public void ConsoleMenu() {
+            // use customer object declared earlier to have persisting data
             Console.WriteLine("Welcome to the Add Customer Menu!");
             Console.WriteLine("[1] Change Name - " + _customer.Name);
             Console.WriteLine("[2] Change Address - " + _customer.Address);
@@ -25,7 +26,7 @@ namespace StoreAppUI {
 
         public MenuType UserChoice() {
             string userInput = Console.ReadLine();
- 
+            // with switch, user can keep editing add customer data until its finalized
             switch(userInput) {
                 case "1":
                     Console.WriteLine("Please enter a customer name: ");
@@ -45,6 +46,7 @@ namespace StoreAppUI {
                     return MenuType.AddCustomerMenu;
                 case "5":
                     _customerBL.AddCustomer(_customer);
+                    Console.WriteLine("Customer added!");
                     return MenuType.CustomerMenu;
                 case "0":
                     return MenuType.MainMenu;

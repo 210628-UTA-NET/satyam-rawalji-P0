@@ -5,7 +5,7 @@ using StoreAppModels;
 
 namespace StoreAppUI {
     public class SearchStoreMenu : IConsoleMenu {
-        //private static StoreFront _storeFront = new StoreFront();
+        // user storefrontbl item to send information to repository in DL
         private IStoreFrontBL _storeFrontBL;
         public SearchStoreMenu(IStoreFrontBL p_storeFrontBL) {
             _storeFrontBL = p_storeFrontBL;
@@ -23,16 +23,17 @@ namespace StoreAppUI {
 
             switch(userInput) {
                 case "1":
+                    // user needs store name to query information
                     Console.WriteLine();
                     Console.WriteLine("Please enter the store name: ");
                     string queryInput = Console.ReadLine();
                     Console.WriteLine();
-                    
-                    // try catch not working in this scenario
                     try {
+                        // store inventory is stored in lineitem list
                         List<LineItem> queryResult = _storeFrontBL.SearchStore(queryInput);
                         Console.WriteLine("Found Store!");
                         Console.WriteLine("Inventory: \n");
+                        // use foreach to display each tuple in db
                         foreach(var query in queryResult) {
                             Console.WriteLine("Product: {0}\n Price: {1}\n Quantity: {2}\n", 
                                                 query.Name,
@@ -43,7 +44,7 @@ namespace StoreAppUI {
                         Console.ReadLine();
                         return MenuType.SearchStoreMenu;
                     }   
-                    catch(InvalidOperationException) {
+                    catch/*(InvalidOperationException)*/ {
                         Console.WriteLine("Input was not found. Press press enter to try again.");
                         Console.ReadLine();
                         return MenuType.SearchStoreMenu;

@@ -21,16 +21,17 @@ namespace StoreAppUI {
 
             switch(userInput) {
                 case "1":
+                    // user needs store name to get order history
                     Console.WriteLine();
                     Console.WriteLine("Please enter the store name: ");
                     string queryInput = Console.ReadLine();
                     Console.WriteLine();
-                    
-                    // try catch not working in this scenario
                     try {
+                        // orders are placed into order list
                         List<Order> queryResult = _storeFrontBL.SearchStoreOrders(queryInput);
                         Console.WriteLine("Found Store!");
                         Console.WriteLine("Inventory: \n");
+                        // use foreach to display data
                         foreach(var query in queryResult) {
                             Console.WriteLine("Date: {0}  |  Total purchase price: ${1}", 
                                                 query.Date,
@@ -40,7 +41,7 @@ namespace StoreAppUI {
                         Console.ReadLine();
                         return MenuType.StoreFrontMenu;
                     }   
-                    catch(InvalidOperationException) {
+                    catch/*(InvalidOperationException) */{
                         Console.WriteLine("Input was not found. Press press enter to try again.");
                         Console.ReadLine();
                         return MenuType.SearchStoreMenu;

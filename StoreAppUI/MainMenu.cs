@@ -16,7 +16,7 @@ namespace StoreAppUI {
             // use readline to get user's input
             string userInput = Console.ReadLine();
 
-            // use switch case to handle different inputs
+            // use switch case to handle different inputs, choice gets routed through factory menu file
             switch(userInput) {
                 case "1":
                     return MenuType.CustomerMenu;
