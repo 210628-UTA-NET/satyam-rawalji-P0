@@ -1,0 +1,80 @@
+-- DROP SCHEMA dbo;
+
+CREATE SCHEMA dbo;
+-- satyamdb.dbo.Customer definition
+
+-- Drop table
+
+-- DROP TABLE satyamdb.dbo.Customer;
+
+CREATE TABLE satyamdb.dbo.Customer (
+	c_id int IDENTITY(1,1) NOT NULL,
+	c_name varchar(40) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	c_address varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	c_email varchar(40) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	c_phoneNumber varchar(20) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
+	CONSTRAINT PK__Customer__213EE7742DE92F37 PRIMARY KEY (c_id)
+);
+
+
+-- satyamdb.dbo.Product definition
+
+-- Drop table
+
+-- DROP TABLE satyamdb.dbo.Product;
+
+CREATE TABLE satyamdb.dbo.Product (
+	p_id int IDENTITY(1,1) NOT NULL,
+	p_name varchar(40) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	p_price float NOT NULL,
+	CONSTRAINT PK__Product__82E06B9100FB12AE PRIMARY KEY (p_id)
+);
+
+
+-- satyamdb.dbo.StoreFront definition
+
+-- Drop table
+
+-- DROP TABLE satyamdb.dbo.StoreFront;
+
+CREATE TABLE satyamdb.dbo.StoreFront (
+	s_id int IDENTITY(1,1) NOT NULL,
+	s_name varchar(40) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	s_address varchar(50) COLLATE SQL_Latin1_General_CP1_CI_AS NOT NULL,
+	CONSTRAINT PK__StoreFro__2F3684F49197F71C PRIMARY KEY (s_id)
+);
+
+
+-- satyamdb.dbo.LineItem definition
+
+-- Drop table
+
+-- DROP TABLE satyamdb.dbo.LineItem;
+
+CREATE TABLE satyamdb.dbo.LineItem (
+	l_id int IDENTITY(1,1) NOT NULL,
+	l_p_id int NOT NULL,
+	l_quantity int NOT NULL,
+	l_s_id int NULL,
+	CONSTRAINT PK__LineItem__A7C7B6F86A7B2F07 PRIMARY KEY (l_id),
+	CONSTRAINT FK__LineItem__l_p_id__628FA481 FOREIGN KEY (l_p_id) REFERENCES satyamdb.dbo.Product(p_id),
+	CONSTRAINT FK__LineItem__l_s_id__656C112C FOREIGN KEY (l_s_id) REFERENCES satyamdb.dbo.StoreFront(s_id)
+);
+
+
+-- satyamdb.dbo.Orders definition
+
+-- Drop table
+
+-- DROP TABLE satyamdb.dbo.Orders;
+
+CREATE TABLE satyamdb.dbo.Orders (
+	o_id int IDENTITY(1,1) NOT NULL,
+	o_s_id int NOT NULL,
+	o_c_id int NOT NULL,
+	o_total float NULL,
+	o_order_date datetime DEFAULT getdate() NULL,
+	CONSTRAINT PK__Orders__904BC20E9B0067C5 PRIMARY KEY (o_id),
+	CONSTRAINT FK__Orders__o_c_id__693CA210 FOREIGN KEY (o_c_id) REFERENCES satyamdb.dbo.Customer(c_id),
+	CONSTRAINT FK__Orders__o_s_id__68487DD7 FOREIGN KEY (o_s_id) REFERENCES satyamdb.dbo.StoreFront(s_id)
+);
